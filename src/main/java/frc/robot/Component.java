@@ -1,8 +1,8 @@
 package frc.robot;
 
-public interface Component
+public abstract class Component
 {
-    public void update();
-    public void autoUpdate();
-    public void disable();
+    public abstract void update();
+    public abstract void autoUpdate();
+    public abstract void disable();
 }
