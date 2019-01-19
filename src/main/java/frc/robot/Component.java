@@ -1,6 +1,8 @@
-package org.usfirst.frc.team662.robot;
+package frc.robot;
 
-public abstract class Component {
-        public abstract void update();
-        public abstract void autoUpdate();
+public abstract class Component
+{
+    public abstract void update();
+    public abstract void autoUpdate();
+    public abstract void disable();
 }
