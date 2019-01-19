@@ -7,10 +7,7 @@ import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 
 public class HatchManip implements Component
-{
-    //Xbox controller
-    XboxController manipController = new XboxController(1);
-    
+{    
     //Beak position variables
     boolean beakPosition = false;
     boolean beakOpen = false;
@@ -31,11 +28,11 @@ public class HatchManip implements Component
 
         //Changing solenoid states
         //If A button pressed change trackSolenoid
-        if(manipController.getRawButton(XboxMap.A)==true)
+        if(RobotMap.manipController.getRawButton(XboxMap.A)==true)
             trackSolenoid = !trackSolenoid;
 
         //If X button pressed change the state of beakSolenoid
-        if(manipController.getRawButton(XboxMap.A)==true)
+        if(RobotMap.manipController.getRawButton(XboxMap.A)==true)
             beakSolenoid = !beakSolenoid; 
     }
 
