@@ -27,13 +27,20 @@ public class Robot extends TimedRobot {
 
     //Initialize a Drive Component
     parts[0] = new Drive();
+    parts[1] = new HatchManip();
+    parts[2] = new BallManip();
+    parts[3] = new Elevator();
+    parts[4] = new SwitchMode();
 
   }
 
   @Override
   public void teleopPeriodic() {
 
-    //Update the component
-    parts[0].update();
+    //Update the components
+    for(int i = 0; i< 5; i++)
+    {
+      parts[i].update();
+    }
   }
 }
