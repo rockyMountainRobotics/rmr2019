@@ -27,20 +27,23 @@ public class HatchManip implements Component
 
     public void update()
     {
-        /*
-        set(boolean) - 
-        true turns solenoid on and pushes beak foward, false retracts
-        true turns solenoid on and opens beak, false closes
-        */
+        if(SwitchMode.mode == "H")
+        {
+            /*
+            set(boolean) - 
+            true turns solenoid on and pushes beak foward, false retracts
+            true turns solenoid on and opens beak, false closes
+            */
 
-        //Changing solenoid states
-        //If A button pressed change trackSolenoid
-        if(RobotMap.manipController.getRawButton(XboxMap.A)==true)
-            trackSolenoid = !trackSolenoid;
+            //Changing solenoid states
+            //If A button pressed change trackSolenoid
+            if(RobotMap.manipController.getRawButton(XboxMap.A)==true)
+                trackSolenoid = !trackSolenoid;
 
-        //If X button pressed change the state of beakSolenoid
-        if(RobotMap.manipController.getRawButton(XboxMap.A)==true)
-            beakSolenoid = !beakSolenoid; 
+            //If X button pressed change the state of beakSolenoid
+            if(RobotMap.manipController.getRawButton(XboxMap.A)==true)
+                beakSolenoid = !beakSolenoid; 
+        }
     }
 
     public void autoUpdate()
