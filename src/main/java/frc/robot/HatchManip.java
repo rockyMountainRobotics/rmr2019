@@ -47,4 +47,10 @@ public class HatchManip implements Component
 
 
     }
+    
+    public void reset()
+    {
+        trackSolenoid = false;
+        beakSolenoid = false;
+    }
 }
