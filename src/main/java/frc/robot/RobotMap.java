@@ -9,7 +9,10 @@ public class RobotMap
 	public final static int RIGHT_FRONT_MOTOR = 6;
 	public final static int LEFT_FRONT_MOTOR = 7;
 	public final static int RIGHT_BACK_MOTOR = 5;
-    public final static int LEFT_BACK_MOTOR = 8;
+    	public final static int LEFT_BACK_MOTOR = 8;
+	//Completely fabricated.
+	public final static int TOP_LEFT_MOTOR = 1;
+	public final static int TOP_RIGHT_MOTOR = 2;
     
     //Controllers
     public static XboxController driveController = new XboxController(0);
