@@ -9,14 +9,21 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class HatchManip implements Component
 {    
     //Beak position variables
-    boolean beakPosition = false;
+    boolean beakExtended = false;
     boolean beakOpen = false;
 
 
     //Constructing Solenoids
-    Solenoid trackSolenoid = new Solenoid(RobotMap.SOLENOID_PORT);
-    Solenoid beakSolenoid = new Solenoid(RobotMap.SOLENOID_PORT);
+    Solenoid trackSolenoid;
+    Solenoid beakSolenoid;
 
+    public HatchManip()
+    {
+        beakExtended = false;
+        beakOpen = false;
+        trackSolenoid = new Solenoid(RobotMap.TRACK_SOLENOID);
+        beakSolenoid = new Solenoid(RobotMap.BEAK_SOLENOID);
+    }
 
     public void update()
     {
