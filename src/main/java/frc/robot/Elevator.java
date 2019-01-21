@@ -1,24 +1,22 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.XboxController;
-
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-
 import edu.wpi.first.wpilibj.DigitalInput;
+
+
 
 public class Elevator extends Component
 {
-    private
-
     //declares motor
-    WPI_TalonSRX elevMotor = new WPI_TalonSRX(RobotMap.CHAIN);
+    WPI_TalonSRX elevMotor = new WPI_TalonSRX(RobotMap.ELEVATOR);
 
     //In situations where limit switches are desired, it is necessary to declare them. YEET SPAGHEET
     public DigitalInput limitSwitchTop;
     public DigitalInput limitSwitchBottom;
 
     //Declares Encoder
-    public Encoder encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+    public Encoder encoder;
 
     //Gets Encoder Data
     private int encData;
@@ -38,11 +36,12 @@ public class Elevator extends Component
     private String position = "BOTTOM";
     private boolean isMoving = false;
 
-    //Constructer
+    //Constructor
     public Elevator()
     {
         limitSwitchTop = new DigitalInput(RobotMap.LIMIT_TOP);
         limtiSwitchBottom = new DigitalInput(RobotMap.LIMIT_BOTTOM);                
+	encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
     }
 
     //Updates Robot Position
@@ -50,7 +49,7 @@ public class Elevator extends Component
     {
         //"Robot.driveController.getRawButton(XboxMap.D_PAD_VERT" MAY NOT BE CORRECT DPAD; CHECK IN FUTURE
         //try Robot.driveController.getRawButton(XboxMap.D_PAD_VERT) < 0
-        if(Robot.driveController.getRawButton(XboxMap.D_PAD_VERT) && !limitSwitchTop && !isMoving)
+        if(Robot.manipController.getRawButton(XboxMap.D_PAD_VERT) && !limitSwitchTop && !isMoving)
 		{
             //updates moving and speed
             isMoving = true;
@@ -67,7 +66,7 @@ public class Elevator extends Component
         }
         //"Robot.driveController.getRawButton(XboxMap.D_PAD_VERT" MAY NOT BE CORRECT DPAD; CHECK IN FUTURE
         //try Robot.driveController.getRawButton(XboxMap.D_PAD_VERT) > 0
-        if(Robot.driveController.getRawButton(XboxMap.D_PAD_HORIZ) && !limitSwitchBottom && !isMoving)
+        if(Robot.manipController.getRawButton(XboxMap.D_PAD_HORIZ) && !limitSwitchBottom && !isMoving)
 		{
             //updates moving and speed
             isMoving = true;
