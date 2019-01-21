@@ -13,13 +13,19 @@ public class SwitchMode extends Component
     @Override
     public void update()
     {
-      //If the Y button is pressed, switch modes.
+      //If the Y button is pressed, switch modes and reset previously used manipulator.
       if(RobotMap.manipController.getRawButton(XboxMap.Y))
       {
         if(mode == "H")
+        {
+          HatchManip.reset();
           mode = "C";
+        }
         else
+        {
+          BallManip.reset();
           mode = "H";
+        }
       }
           
     }
