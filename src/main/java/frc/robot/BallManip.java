@@ -24,10 +24,6 @@ public class BallManip implements Component
     private CANTalon rightSuck;
     private CANTalon armMover;
 
-    private double speed;
-
-    
-
     public DigitalInput limitSwitchBack = new DigitalInput(LIMIT_SWITCH_BACK);
 
 
@@ -36,7 +32,6 @@ public class BallManip implements Component
         leftSuck = new CANTalon(RobotMap.TOP_LEFT_MOTOR);
         rightSuck = new CANTalon(RobotMap.TOP_RIGHT_MOTOR);
         armMover = new CANTalon(RobotMap.TOP_CENTER_MOTOR);
-        speed = 0.0;
 
         MULTIPLIER = .9;
         DEADZONE_1 = -.5;
