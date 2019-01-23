@@ -9,14 +9,15 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class HatchManip implements Component
 {    
     //Beak position variables
-    boolean beakExtended = false;
-    boolean beakOpen = false;
+    boolean beakExtended;
+    boolean beakOpen;
 
 
     //Constructing Solenoids
     Solenoid trackSolenoid;
     Solenoid beakSolenoid;
-
+    
+    //Constructor
     public HatchManip()
     {
         beakExtended = false;
@@ -27,6 +28,7 @@ public class HatchManip implements Component
 
     public void update()
     {
+        //Only does stuff when in "H"atch mode
         if(SwitchMode.mode == "H")
         {
             /*
@@ -34,15 +36,23 @@ public class HatchManip implements Component
             true turns solenoid on and pushes beak foward, false retracts
             true turns solenoid on and opens beak, false closes
             */
-
+            
+            //Not sure if thats how solenoids work.
+            
             //Changing solenoid states
             //If A button pressed change trackSolenoid
             if(RobotMap.manipController.getRawButton(XboxMap.A)==true)
+            {
                 trackSolenoid = !trackSolenoid;
+                beakExtended = !beakExtended; //Keeps track of whether the beak is extended or not.
+            }
 
             //If X button pressed change the state of beakSolenoid
             if(RobotMap.manipController.getRawButton(XboxMap.A)==true)
-                beakSolenoid = !beakSolenoid; 
+            {
+                beakSolenoid = !beakSolenoid;
+                beakOpen = !beakOpen; //Keeps track of whether beak is open or closed.
+            }    
         }
     }
 
@@ -54,7 +64,10 @@ public class HatchManip implements Component
 
     public void disable()
     {
-
+        trackSolenoid = false;
+        beakSolenoid = false
+        beakOpen = false;
+        beakExtended = false;
 
     }
     
@@ -62,5 +75,7 @@ public class HatchManip implements Component
     {
         trackSolenoid = false;
         beakSolenoid = false;
+        beakOpen = false;
+        beakExtended = false;
     }
 }
