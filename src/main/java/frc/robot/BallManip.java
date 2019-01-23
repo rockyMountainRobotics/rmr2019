@@ -23,19 +23,25 @@ public class BallManip implements Component
     private CANTalon leftSuck;
     private CANTalon rightSuck;
     private CANTalon armMover;
+    
+    //Limit Switch
+    public DigitalInput limitSwitchBack;
 
-    public DigitalInput limitSwitchBack = new DigitalInput(LIMIT_SWITCH_BACK);
-
-
+    //Constructor
     public BallManip()
     {
+        //Creates the motors as CANTalons, may need to be changed.
         leftSuck = new CANTalon(RobotMap.TOP_LEFT_MOTOR);
         rightSuck = new CANTalon(RobotMap.TOP_RIGHT_MOTOR);
         armMover = new CANTalon(RobotMap.TOP_CENTER_MOTOR);
-
-        MULTIPLIER = .9;
-        DEADZONE_1 = -.5;
-        DEADZONE_2 = .5;
+        
+        //Limit Switch
+        limitSwitchBack = new DigitalInput(LIMIT_SWITCH_BACK);
+        
+        //Initialize constants
+        MULTIPLIER = .9; //Motor speed multiplier
+        DEADZONE_1 = -.5; //Deadzone in negative direction on xbox joystick
+        DEADZONE_2 = .5; //Deadzone in positive direction on xbox joystick
 
         //INVERTS the RIGHT side motor so that both sides spin inwards. Might need to change this if
         //A) inverting doesn't do what I thought it did or B) the LEFT side needs to be inverted.
@@ -66,7 +72,7 @@ public class BallManip implements Component
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void autoUpdate()
     {
-        //Will probably need to call update()
+        //Will probably need to call update(), for the auto lineup + shoot (if we are having the auto also shoot the ball)
 
     }
 
@@ -93,16 +99,29 @@ public class BallManip implements Component
              leftSuck.set(1 * MULTIPLIER);
              rightSuck.set(1 * MULTIPLIER);
          }
+         //Stops the motors from moving once the buttons aren't being pressed.
+         else
+         {
+            leftSuck.set(0);
+            rightSuck.set(0);
+         }
 
         //When right trigger is pressed and left trigger isn't being pressed
         if(RobotMap.manipController.getRawButton(XboxMap.R_ANALOG) == true && RobotMap.manipController.getRawButton(XboxMap.L_ANALOG) != true)
         {
-            //is this how it works? who knows : )
+            //Should make the motors push the ball out.
             leftSuck.set(-1 * MULTIPLIER);
             rightSuck.set(-1 * MULTIPLIER);
         }
+        //Stops the motors from moving once the buttons aren't being pressed.
+        else
+        {
+            leftSuck.set(0);
+            rightSuck.set(0);
+        }
     }
-
+    
+    //Resets the arm to its default position so that the beak can extend and not hit the arm.
     public void reset()
     {
         //Need to fix for encoder, so that the motors don't just grind the arm into the robot.
