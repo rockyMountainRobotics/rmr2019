@@ -20,9 +20,9 @@ public class BallManip implements Component
     final double MULTIPLIER;
 
     //Motors (left side and right side of ball manipulator) CANTalon or SRX?????
-    private CANTalon leftSuck;
-    private CANTalon rightSuck;
-    private CANTalon armMover;
+    private VictorSPX leftSuck;
+    private VictorSPX rightSuck;
+    private VictorSPX armMover;
     
     //Limit Switch
     public DigitalInput limitSwitchBack;
@@ -31,9 +31,9 @@ public class BallManip implements Component
     public BallManip()
     {
         //Creates the motors as CANTalons, may need to be changed.
-        leftSuck = new CANTalon(RobotMap.TOP_LEFT_MOTOR);
-        rightSuck = new CANTalon(RobotMap.TOP_RIGHT_MOTOR);
-        armMover = new CANTalon(RobotMap.TOP_CENTER_MOTOR);
+        leftSuck = new VictorSPX(RobotMap.TOP_LEFT_MOTOR);
+        rightSuck = new VictorSPX(RobotMap.TOP_RIGHT_MOTOR);
+        armMover = new VictorSPX(RobotMap.TOP_CENTER_MOTOR);
         
         //Limit Switch
         limitSwitchBack = new DigitalInput(LIMIT_SWITCH_BACK);
