@@ -9,31 +9,51 @@ import edu.wpi.first.wpilibj.Solenoid;
 public class HatchManip implements Component
 {    
     //Beak position variables
-    boolean beakPosition = false;
-    boolean beakOpen = false;
+    boolean beakExtended;
+    boolean beakOpen;
 
 
     //Constructing Solenoids
-    Solenoid trackSolenoid = new Solenoid(RobotMap.SOLENOID_PORT);
-    Solenoid beakSolenoid = new Solenoid(RobotMap.SOLENOID_PORT);
-
+    Solenoid trackSolenoid;
+    Solenoid beakSolenoid;
+    
+    //Constructor
+    public HatchManip()
+    {
+        beakExtended = false;
+        beakOpen = false;
+        trackSolenoid = new Solenoid(RobotMap.TRACK_SOLENOID);
+        beakSolenoid = new Solenoid(RobotMap.BEAK_SOLENOID);
+    }
 
     public void update()
     {
-        /*
-        set(boolean) - 
-        true turns solenoid on and pushes beak foward, false retracts
-        true turns solenoid on and opens beak, false closes
-        */
+        //Only does stuff when in "H"atch mode
+        if(SwitchMode.mode == "H")
+        {
+            /*
+            set(boolean) - 
+            true turns solenoid on and pushes beak foward, false retracts
+            true turns solenoid on and opens beak, false closes
+            */
+            
+            //Not sure if thats how solenoids work.
+            
+            //Changing solenoid states
+            //If A button pressed change trackSolenoid
+            if(RobotMap.manipController.getRawButton(XboxMap.A)==true)
+            {
+                trackSolenoid = !trackSolenoid;
+                beakExtended = !beakExtended; //Keeps track of whether the beak is extended or not.
+            }
 
-        //Changing solenoid states
-        //If A button pressed change trackSolenoid
-        if(RobotMap.manipController.getRawButton(XboxMap.A)==true)
-            trackSolenoid = !trackSolenoid;
-
-        //If X button pressed change the state of beakSolenoid
-        if(RobotMap.manipController.getRawButton(XboxMap.A)==true)
-            beakSolenoid = !beakSolenoid; 
+            //If X button pressed change the state of beakSolenoid
+            if(RobotMap.manipController.getRawButton(XboxMap.A)==true)
+            {
+                beakSolenoid = !beakSolenoid;
+                beakOpen = !beakOpen; //Keeps track of whether beak is open or closed.
+            }    
+        }
     }
 
     public void autoUpdate()
@@ -44,7 +64,10 @@ public class HatchManip implements Component
 
     public void disable()
     {
-
+        trackSolenoid = false;
+        beakSolenoid = false
+        beakOpen = false;
+        beakExtended = false;
 
     }
     
@@ -52,5 +75,7 @@ public class HatchManip implements Component
     {
         trackSolenoid = false;
         beakSolenoid = false;
+        beakOpen = false;
+        beakExtended = false;
     }
 }
