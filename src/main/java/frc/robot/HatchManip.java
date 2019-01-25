@@ -1,22 +1,19 @@
-import edu.wpi.first.wpilibj.XboxController;
+package frc.robot;
 
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
-import com.sun.xml.internal.ws.api.Component;
-
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.Solenoid;
 
-public class HatchManip implements Component
+
+public class HatchManip extends Component
 {    
     //Beak position variables
     boolean beakExtended;
     boolean beakOpen;
 
-
     //Constructing Solenoids
     Solenoid trackSolenoid;
     Solenoid beakSolenoid;
     
+
     //Constructor
     public HatchManip()
     {
@@ -26,10 +23,11 @@ public class HatchManip implements Component
         beakSolenoid = new Solenoid(RobotMap.BEAK_SOLENOID);
     }
 
+
     public void update()
     {
         //Only does stuff when in "H"atch mode
-        if(SwitchMode.mode == "H")
+        if(SwitchMode.mode == 'H')
         {
             /*
             set(boolean) - 
@@ -43,18 +41,19 @@ public class HatchManip implements Component
             //If A button pressed change trackSolenoid
             if(RobotMap.manipController.getRawButton(XboxMap.A)==true)
             {
-                trackSolenoid = !trackSolenoid;
+                trackSolenoid.set(!trackSolenoid.get());
                 beakExtended = !beakExtended; //Keeps track of whether the beak is extended or not.
             }
 
             //If X button pressed change the state of beakSolenoid
             if(RobotMap.manipController.getRawButton(XboxMap.A)==true)
             {
-                beakSolenoid = !beakSolenoid;
+                beakSolenoid.set(!beakSolenoid.get());
                 beakOpen = !beakOpen; //Keeps track of whether beak is open or closed.
             }    
         }
     }
+
 
     public void autoUpdate()
     {
@@ -62,19 +61,19 @@ public class HatchManip implements Component
 
     }
 
+
     public void disable()
     {
-        trackSolenoid = false;
-        beakSolenoid = false
-        beakOpen = false;
-        beakExtended = false;
+        reset();
 
     }
+
     
     public void reset()
     {
-        trackSolenoid = false;
-        beakSolenoid = false;
+        //reset the solenoids to off and the corresponding variables
+        trackSolenoid.set(false);
+        beakSolenoid.set(false);
         beakOpen = false;
         beakExtended = false;
     }

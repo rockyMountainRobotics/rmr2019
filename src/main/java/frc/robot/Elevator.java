@@ -1,15 +1,17 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.XboxController;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 import edu.wpi.first.wpilibj.DigitalInput;
-
+import edu.wpi.first.wpilibj.Encoder;
 
 
 public class Elevator extends Component
 {
     //declares motor
     WPI_TalonSRX elevMotor = new WPI_TalonSRX(RobotMap.ELEVATOR);
+
+    //Variable used to set speed
+    double speed = 0.0;
 
     //In situations where limit switches are desired, it is necessary to declare them. YEET SPAGHEET
     public DigitalInput limitSwitchTop;
@@ -27,33 +29,35 @@ public class Elevator extends Component
     private boolean direction;
     private boolean stopped;*/
 
-    //Constants declaring top and bottom values *NOT TESTED(change values or ded)
+    //Constants declaring top and bottom values for encoder *NOT TESTED(change values or ded)
     private int TOP_MAX = 180;
     private int BOTTOM_MAX = 0;
     private int MIDDLE_MAX = 90;
 
-    //Current position
+    //Current position and whether or not we are moving
     private String position = "BOTTOM";
     private boolean isMoving = false;
+
 
     //Constructor
     public Elevator()
     {
         limitSwitchTop = new DigitalInput(RobotMap.LIMIT_TOP);
-        limtiSwitchBottom = new DigitalInput(RobotMap.LIMIT_BOTTOM);                
-	encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+        limitSwitchBottom = new DigitalInput(RobotMap.LIMIT_BOTTOM);                
+	    encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
     }
 
-    //Updates Robot Position
-    public abstract void update()
+
+    //Updates Robot Position every frame
+    public void update()
     {
-        //"Robot.driveController.getRawButton(XboxMap.D_PAD_VERT" MAY NOT BE CORRECT DPAD; CHECK IN FUTURE
-        //try Robot.driveController.getRawButton(XboxMap.D_PAD_VERT) < 0
-        if(Robot.manipController.getRawButton(XboxMap.D_PAD_VERT) && !limitSwitchTop && !isMoving)
+        //TODO: test Robot.driveController.getRawButton(XboxMap.D_PAD_VERT)" MAY NOT BE CORRECT DPAD; CHECK IN FUTURE - try Robot.driveController.getRawButton(XboxMap.D_PAD_VERT) < 0
+        //if the D-pad is pressed, we're not already at the top, and not already moving somewhere, then move UP ONE POSITION
+        if(RobotMap.manipController.getRawButton(XboxMap.D_PAD_VERT) && !limitSwitchTop.get() && !isMoving)
 		{
             //updates moving and speed
             isMoving = true;
-            speed = -0.25;
+            speed = 0.25;
             //updates the position of the elevator
             if (position.equals("BOTTOM"))
             {
@@ -64,13 +68,14 @@ public class Elevator extends Component
                 position = "TOP";
             }
         }
-        //"Robot.driveController.getRawButton(XboxMap.D_PAD_VERT" MAY NOT BE CORRECT DPAD; CHECK IN FUTURE
-        //try Robot.driveController.getRawButton(XboxMap.D_PAD_VERT) > 0
-        if(Robot.manipController.getRawButton(XboxMap.D_PAD_HORIZ) && !limitSwitchBottom && !isMoving)
+        
+        //TODO: probably needs to be changed to D_PAD_VERT somehow
+        //move DOWN ONE POSITION
+        if(RobotMap.manipController.getRawButton(XboxMap.D_PAD_HORIZ) && !limitSwitchBottom.get() && !isMoving)
 		{
             //updates moving and speed
             isMoving = true;
-            speed = 0.25;
+            speed = -0.25;
             //updates the position of the elevator
             if (position.equals("TOP"))
             {
@@ -88,6 +93,7 @@ public class Elevator extends Component
             speed = 0;
         }
 
+        //Set the motor to the speed as defined by the if's above
         elevMotor.set(speed);
         encData = encoder.get();
 
@@ -97,15 +103,16 @@ public class Elevator extends Component
         direction = encoder.getDirection();
         stopped = encoder.getStopped();*/
 
-        
     }
 
-    public abstract void autoUpdate()
+
+    public void autoUpdate()
     {
-
+        //TODO: Probably needs update() here
     }
 
-    public abstract void disable()
+    
+    public void disable()
     {
 
     }

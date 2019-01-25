@@ -1,4 +1,4 @@
-package org.usfirst.frc.team662.robot;
+package frc.robot;
 
 public class XboxMap {
 
