@@ -1,5 +1,6 @@
 package frc.robot;
 
+//Changes modes between Hatches and Balls (so buttons will do different things); makes sure the beak and the ball arm don't hit each other
 public class SwitchMode extends Component
 {
     public static char mode;
