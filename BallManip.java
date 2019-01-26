@@ -17,18 +17,13 @@ public class BallManip extends Component
     private WPI_VictorSPX leftSuck;
     private WPI_VictorSPX rightSuck;
     private WPI_TalonSRX armMover;
-
     
     //Limit Switch - checks if there's a ball in the grabber
     public DigitalInput limitSwitchBack;
-    
-    //Encoder (has Quadrature support)
-    Encoder steve;
 
     //Constructor
     public BallManip()
     {
-
         //Creates the motors as VictorSPX's
         leftSuck = new WPI_VictorSPX(RobotMap.TOP_LEFT_MOTOR);
         rightSuck = new WPI_VictorSPX(RobotMap.TOP_RIGHT_MOTOR);
@@ -40,19 +35,6 @@ public class BallManip extends Component
         //INVERTS the RIGHT side motor so that both sides spin inwards. Might need to change this if
         //A) inverting doesn't do what I thought it did or B) the LEFT side needs to be inverted.
         rightSuck.setInverted(true);
-        
-        //Creates Steve the encoder
-        steve = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
-        
-        //Changes settings on the encoder. More specifics here: https://wpilib.screenstepslive.com/s/currentCS/m/java/l/599717-encoders-measuring-rotation-of-a-wheel-or-other-shaft
-        
-        steve.setMaxPeriod(.1); //This is the maximum time in seconds before the device is considered not moving
-        steve.setMinRate(10); //minimum rate before device is considered stopped accounts for distance per pulse and scale factor
-        steve.setDistancePerPulse(5); //scale factor between 
-        steve.setReverseDirection(true); //Sets the direction the encoder counts
-        steve.setSamplesToAverage(7); //Sets number of averages to sample to determine period.
-        
-        //Gonna be honest, i don't know what the hell those things are ^
 
     }
 

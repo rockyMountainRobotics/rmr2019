@@ -9,7 +9,6 @@ package frc.robot;
 
 
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.CameraServer;
 
 
 /**
@@ -32,7 +31,6 @@ public class Robot extends TimedRobot {
     parts[2] = new BallManip();
     parts[3] = new Elevator();
     parts[4] = new SwitchMode();
-    camera = CameraServer.getInstance().startAutomaticCapture();
 
   }
 

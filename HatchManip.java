@@ -41,15 +41,15 @@ public class HatchManip extends Component
             //If A button pressed change trackSolenoid
             if(RobotMap.manipController.getRawButton(XboxMap.A)==true)
             {
+                trackSolenoid.set(!trackSolenoid.get());
                 beakExtended = !beakExtended; //Keeps track of whether the beak is extended or not.
-                trackSolenoid.set(beakExtended); //Extends/retracts beak based on beakExtended.
             }
 
             //If X button pressed change the state of beakSolenoid
             if(RobotMap.manipController.getRawButton(XboxMap.A)==true)
             {
+                beakSolenoid.set(!beakSolenoid.get());
                 beakOpen = !beakOpen; //Keeps track of whether beak is open or closed.
-                beakSolenoid.set(beakOpen); //Opens/closes beak based on beakOpen.
             }    
         }
     }
