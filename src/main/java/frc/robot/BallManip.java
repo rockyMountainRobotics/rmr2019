@@ -17,6 +17,7 @@ public class BallManip extends Component
     private WPI_VictorSPX leftSuck;
     private WPI_VictorSPX rightSuck;
     private WPI_TalonSRX armMover;
+
     
     //Limit Switch - checks if there's a ball in the grabber
     public DigitalInput limitSwitchBack;
@@ -27,6 +28,7 @@ public class BallManip extends Component
     //Constructor
     public BallManip()
     {
+
         //Creates the motors as VictorSPX's
         leftSuck = new WPI_VictorSPX(RobotMap.TOP_LEFT_MOTOR);
         rightSuck = new WPI_VictorSPX(RobotMap.TOP_RIGHT_MOTOR);
