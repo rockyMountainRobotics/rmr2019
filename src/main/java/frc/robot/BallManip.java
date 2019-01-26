@@ -10,7 +10,7 @@ public class BallManip extends Component
     final static double DEADZONE_1 = -.5;
     final static double DEADZONE_2 = .5;
     
-    //Multiplier
+    //Multiplier (will never be over 1)
     final double MULTIPLIER = .9;
 
     //Motors (left side and right side of ball manipulator)
@@ -47,7 +47,7 @@ public class BallManip extends Component
         //Changes settings on the encoder. More specifics here: https://wpilib.screenstepslive.com/s/currentCS/m/java/l/599717-encoders-measuring-rotation-of-a-wheel-or-other-shaft
         
         steve.setMaxPeriod(.1); //This is the maximum time in seconds before the device is considered not moving
-        steve.setMinRate(10); //minimum rate before device is considered stopped accounts for distance per pulse and scale factor
+        steve.setMinRate(10); //minimum rate before device is considered stopped; accounts for distance per pulse and scale factor
         steve.setDistancePerPulse(5); //scale factor between 
         steve.setReverseDirection(true); //Sets the direction the encoder counts
         steve.setSamplesToAverage(7); //Sets number of averages to sample to determine period.
@@ -68,7 +68,7 @@ public class BallManip extends Component
                 ballSuck();
             }
             
-            //When they push the joystick further than the deadzone, set the arm to the value of the joystick
+            //When they push the joystick further than the deadzone, set the arm to the value of the joystick (in testing may want to multiply by .5 or something to allow more precise controls)
             if(Math.abs(RobotMap.manipController.getRawAxis(XboxMap.RIGHT_JOY_VERT)) > DEADZONE_1)
             {
                 armMover.set(RobotMap.manipController.getRawAxis(XboxMap.RIGHT_JOY_VERT));
@@ -103,6 +103,7 @@ public class BallManip extends Component
         //When left trigger is pressed and right trigger isn't being pressed
         if(RobotMap.manipController.getRawButton(XboxMap.L_ANALOG) == true && RobotMap.manipController.getRawButton(XboxMap.R_ANALOG) != true)
          {
+            //Succ ball in
              leftSuck.set(1 * MULTIPLIER);
              rightSuck.set(1 * MULTIPLIER);
          }
