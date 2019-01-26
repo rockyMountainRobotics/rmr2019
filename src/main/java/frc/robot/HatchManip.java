@@ -52,10 +52,6 @@ public class HatchManip extends Component
                 beakSolenoid.set(beakOpen); //Opens/closes beak based on beakOpen.
             }    
         }
-        else
-        {
-            reset();
-        }
     }
 
 
