@@ -35,7 +35,7 @@ public class Drive extends Component {
     leftBack = new WPI_VictorSPX(RobotMap.LEFT_BACK_MOTOR);
     rightBack = new WPI_VictorSPX(RobotMap.RIGHT_BACK_MOTOR);
 
-    //invert one motor :D
+    //invert one motor :D (but why?)
     leftFront.setInverted(true);
     
     //Initialize speed controllers
