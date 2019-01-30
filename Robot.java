@@ -7,40 +7,64 @@
 
 package frc.robot;
 
-
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.SerialPort;
+
+import edu.wpi.first.wpilibj.CameraServer;
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.cscore.CvSource;
 
 
-/**
- * This is a demo program showing the use of the RobotDrive class, specifically
- * it contains the code necessary to operate a robot with tank drive.
- */
+
+
+import frc.robot.CasseroleRIOLoadMonitor;
+
+import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
+
+
+
+
+
+
 public class Robot extends TimedRobot {
 
-  //create a component array 
-  Component[] parts = new Component[10];
-
-
+  //camera init
+  JeVoisInterface cam = null;
+  Boolean teleopsent = false;
+  
+  //UsbCamera jevois = CameraServer.getInstance().startAutomaticCapture();
 
   @Override
   public void robotInit() {
-
-    //Initialize a Drive Component
-    parts[0] = new Drive();
-    parts[1] = new HatchManip();
-    parts[2] = new BallManip();
-    parts[3] = new Elevator();
-    parts[4] = new SwitchMode();
-
+   //cam.setCameraStreamActive(true);
   }
-
+  //this also repeats
   @Override
   public void teleopPeriodic() {
-
-    //Update the components
-    for(int i = 0; i< 5; i++)
+    
+    if (cam == null)
     {
-      parts[i].update();
+      cam = new JeVoisInterface();
+    }
+    else
+    {
+      cam.start();
+    }
+    teleopsent = true;
+    // System.out.println("telelop");
+  }
+  @Override
+  public void disabledPeriodic()
+  {
+    if ((cam != null) && (teleopsent == true) )
+    {
+      cam.stop();
+      teleopsent = false;
     }
   }
 }
+
