@@ -46,13 +46,19 @@ public class BallManip extends Component
         
         //Changes settings on the encoder. More specifics here: https://wpilib.screenstepslive.com/s/currentCS/m/java/l/599717-encoders-measuring-rotation-of-a-wheel-or-other-shaft
         
-        steve.setMaxPeriod(.1); //This is the maximum time in seconds before the device is considered not moving
+        //steve.setMaxPeriod(.1); //This is the maximum time in seconds before the device is considered not moving - it's recommended to substitute minRate for this
         steve.setMinRate(10); //minimum rate before device is considered stopped; accounts for distance per pulse and scale factor
-        steve.setDistancePerPulse(5); //scale factor between 
-        steve.setReverseDirection(true); //Sets the direction the encoder counts
+        //steve.setDistancePerPulse(5); //scale factor - this is contained in the 4x part of the constructor
+        //steve.setReverseDirection(true); //Sets the direction the encoder counts - this is already done in the constructor
         steve.setSamplesToAverage(7); //Sets number of averages to sample to determine period.
         
         //Gonna be honest, i don't know what the hell those things are ^
+        
+        //TO PREVENT JITTERS: - increase parameter of setSamplesToAverage
+        //                    - change encoding type in constructor from 4x to 1x or 2x
+        
+        //SET DISTANCE PER PULSE: As of right now, this method is commented out b/c we don't need it
+        //but we may decide to use it with Pulses per Revolution or if there's extra gearing added after the encoder
 
     }
 
@@ -94,7 +100,7 @@ public class BallManip extends Component
     public void ballSuck()
     {
         //If there is a ball and its trying to SUCC, stops it from burning a hole in the ball. (limitSwitchBack.get() may need to be inversed)
-        if(limitSwitchBack.get() && (Math.abs(leftSuck.get()) > 0 || Math.abs(rightSuck.get()) < 0)) 
+        if(limitSwitchBack.get() && (Math.abs(leftSuck.get()) > 0 || Math.abs(rightSuck.get()) < 0))
         {
             leftSuck.set(0);
             rightSuck.set(0);
