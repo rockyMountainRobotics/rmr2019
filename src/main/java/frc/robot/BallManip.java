@@ -100,6 +100,7 @@ public class BallManip extends Component
     public void ballSuck()
     {
         //If there is a ball and its trying to SUCC, stops it from burning a hole in the ball. (limitSwitchBack.get() may need to be inversed)
+        //THIS CODE IS WRONG!! Math.abs is always going to be >0, so this won't work as intended
         if(limitSwitchBack.get() && (Math.abs(leftSuck.get()) > 0 || Math.abs(rightSuck.get()) < 0))
         {
             leftSuck.set(0);
