@@ -30,7 +30,7 @@ import edu.wpi.first.wpilibj.RobotBase;
 
  */
 
-public final class Main {
+public final class MainButItWorks {
 
   private Main() {
 
