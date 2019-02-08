@@ -1,54 +1,121 @@
-        //so far this just sorts the points and saves them - outline for next section is at bottom
+1. Sort coordinates
+   - 1 = lowest y, if tie lowest x
+   - 2 = highest x of remaining 3, if tie lowest y
+   - 3 = highest x of remaining 2
+   - 4 = remaining point
+
+2. Decide which way to turn based on the angle of the rectangle
+
+
+
+int x1 = 9999;
+
+int y1 = 9999;
+
+int pos1 = 0;
+
+
+int x2 = -9999;
+
+int y2 = 9999;
+
+int pos2 = 0;
+
+
+int x3 = -9999;
+
+int y3 = 0;
+
+int pos3 = 0;
+int x4 = 0;
+int y4 = 0;
+
+
+
+
+//Find the first point
+
+for(int i = 0; i<7; i+=2){
+ 	if((array[i+1] < y1) || (array[i+1] == y1 && array[i] < x1)){
+  
+		x1 = array[i];
+        	
+		y1 = array[i+1];
+	        	
+		pos1 = i;
+     
+	}
         
+}
+
         
-        int x1 = 9999;
-        int y1 = 9999;
-        int pos1 = 0;
 
-        int x2 = -9999;
-        int y2 = 9999;
-        int pos2 = 0;
-
-        int x3 = -9999;
-        int y3 = 0;
-        int pos3 = 0;
-
-        int x4 = 0;
-        int y4 = 0;
-
-
-        //Find the first point
-        for(int i = 0; i<7; i+=2){
-        	if((array[i+1] < y1) || (array[i+1] == y1 && array[i] < x1)){
-        		x1 = array[i];
-        		y1 = array[i+1];
-	        	pos1 = i;
-        	}
-        }
-
-        //Find the second point
-        for(int i = 0; i<7;i+=2){
-        	if(i!=pos1 && (array[i] > x2 || (array[i] == x2 && array[i+1] < y2))){
-        		x2 = array[i];
-        		y2 = array[i+1];
-        		pos2 = i;
-        	}
-    }
-
-        //Find the third point
-        for(int i = 0; i < 7; i+=2){
-        	if((i!=pos1 && i!=pos2) && array[i] > x3){
-        		x3 = array[i];
-        		y3 = array[i+1];
-        		pos3 = i;
-        	}
-        }
-
-        //Find the fourth point
-        for(int i = 0; i < 7; i+=2){
-        	if(i!=pos1 && i!=pos2 && i!=pos3){
-        		x4=array[i];
-        		y4=array[i+1];
-        	}
-        }
+//Find the second point
         
+for(int i = 0; i<7;i+=2){
+        
+	if(i!=pos1 && (array[i] > x2 || (array[i] == x2 && array[i+1] < y2))){
+     
+   		x2 = array[i];
+      
+  		y2 = array[i+1];
+        
+		pos2 = i;
+        
+	}
+    
+}
+
+        
+
+//Find the third point
+   
+for(int i = 0; i < 7; i+=2){
+     
+	if((i!=pos1 && i!=pos2) && array[i] > x3){
+
+		x3 = array[i];
+       
+ 		y3 = array[i+1];
+        
+		pos3 = i;
+        	
+	}
+        
+}
+
+        
+
+//Find the fourth point
+        
+for(int i = 0; i < 7; i+=2){
+     
+   	if(i!=pos1 && i!=pos2 && i!=pos3){
+        
+		x4=array[i];
+        	
+		y4=array[i+1];
+     
+   	}
+       
+}
+
+
+
+//1. Find the distance between 1 and 2 and between 1 and 4
+//2. Figure out if one of the lines is the top of the screen - if so, save the other one
+//3. If neither was the top of the screen, save whichever is longer
+//4. If the line between 1 and 2 was saved, turn left; if the line between 1 and 4 was saved, turn right
+//5. Find the angle between the long side and a vertical line (inverse trig)     
+		
+
+
+
+
+
+
+
+
+
+
+
