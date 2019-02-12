@@ -7,9 +7,10 @@
 
 package frc.robot;
 
-
+import edu.wpi.cscore.UsbCamera;
+import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
-import edu.wpi.first.wpilibj.CameraServer;
 
 
 /**
@@ -20,29 +21,54 @@ public class Robot extends TimedRobot {
 
   //create a component array 
   Component[] parts = new Component[10];
+  //The number of parts
+  int numParts = 0;
 
+  //The camera
+  UsbCamera driverCam;
+  CompressorSwitch cs;
 
+  //TODO: ADD A SHIFTER!!!
 
   @Override
   public void robotInit() {
+    //Create the camera
+    //CameraServer cameraServer = CameraServer.getInstance();
+    //driverCam = cameraServer.startAutomaticCapture();
+    System.out.println("Robot Init");
 
-    //Initialize a Drive Component
+
+    //Initialize the components
     parts[0] = new Drive();
-    parts[1] = new HatchManip();
-    parts[2] = new BallManip();
-    parts[3] = new Elevator();
-    parts[4] = new SwitchMode();
-    camera = CameraServer.getInstance().startAutomaticCapture();
+    numParts++;
+    parts[1] = new CompressorSwitch();
+    numParts++;
+    parts[2] = new SwitchMode();
+    numParts++;
+    parts[3] = new BallManip();
+    numParts++;
+    parts[4] = new HatchManip();
+    numParts++;
+    parts[5] = new Elevator();
+    numParts++;
+    parts[6] = new Shifter();
+    numParts++;
+    parts[7] = new Wheelie();
+    numParts++;
+    
+    //camera = CameraServer.getInstance().startAutomaticCapture();
 
   }
 
+
   @Override
   public void teleopPeriodic() {
-
     //Update the components
-    for(int i = 0; i< 5; i++)
+    for(int i = 0; i< numParts; i++)
     {
       parts[i].update();
     }
   }
 }
+
+//TODO: during sandstorm the robot is automatically in autonomous mode; we will need to be able to drive still during then

@@ -18,7 +18,7 @@ public class Elevator extends Component
     public DigitalInput limitSwitchBottom;
 
     //Declares Encoder
-    public Encoder encoder;
+    //public Encoder encoder;
 
     //Gets Encoder Data
     private int encData;
@@ -35,8 +35,9 @@ public class Elevator extends Component
     private int MIDDLE_MAX = 90;
 
     //Current position and whether or not we are moving
-    private String position = "BOTTOM";
-    private boolean isMoving = false;
+    private String position = "BOTTOM"; //TODO: Need to reset the elevator to the bottom or else this will be inaccurate
+    private boolean isMovingUp = false;
+    private boolean isMovingDown = false;
 
 
     //Constructor
@@ -44,58 +45,51 @@ public class Elevator extends Component
     {
         limitSwitchTop = new DigitalInput(RobotMap.LIMIT_TOP);
         limitSwitchBottom = new DigitalInput(RobotMap.LIMIT_BOTTOM);                
-	    encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+	    //encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
     }
 
 
     //Updates Robot Position every frame
     public void update()
     {
+
+        //System.out.println("POV: " + RobotMap.manipController.getPOV());
         //TODO: test Robot.driveController.getRawButton(XboxMap.D_PAD_VERT)" MAY NOT BE CORRECT DPAD; CHECK IN FUTURE - try Robot.driveController.getRawButton(XboxMap.D_PAD_VERT) < 0
         //if the D-pad is pressed, we're not already at the top, and not already moving somewhere, then move UP ONE POSITION
-        if(RobotMap.manipController.getRawButton(XboxMap.D_PAD_VERT) && !limitSwitchTop.get() && !isMoving)
+        if(RobotMap.manipController.getPOV() == 0 && limitSwitchTop.get() && !isMovingUp)
 		{
             //updates moving and speed
-            isMoving = true;
-            speed = 0.25;
-            //updates the position of the elevator
-            if (position.equals("BOTTOM"))
-            {
-                position = "MIDDLE";
-            }
-            else if(position.equals("MIDDLE"))
-            {
-                position = "TOP";
-            }
+            isMovingDown = false;
+            isMovingUp = true;
+            speed = 0.2;
         }
         
         //TODO: probably needs to be changed to D_PAD_VERT somehow
         //move DOWN ONE POSITION
-        if(RobotMap.manipController.getRawButton(XboxMap.D_PAD_HORIZ) && !limitSwitchBottom.get() && !isMoving)
+
+        if(RobotMap.manipController.getPOV() == 180 && limitSwitchBottom.get() && !isMovingDown)
 		{
             //updates moving and speed
-            isMoving = true;
-            speed = -0.25;
-            //updates the position of the elevator
-            if (position.equals("TOP"))
-            {
-                position = "MIDDLE";
-            }
-            else if(position.equals("MIDDLE"))
-            {
-                position = "BOTTOM";
-            }
+            isMovingUp = false;
+            isMovingDown = true;
+            speed = -0.1;
         }
         
         //if position matches encoder, then stop
-        if ((position.equals("TOP") && encData == TOP_MAX) || (position.equals("MIDDLE") && encData == MIDDLE_MAX) || (position.equals("BOTTOM") && encData == BOTTOM_MAX))
+        //TODO: add something that allows the driver to override the elevator motor and move manually.
+        /*if ((isMovingUp && limitSwitchTop.get() == true) ||  (isMovingDown && limitSwitchBottom.get() == true))
         {
             speed = 0;
         }
+        */
 
+        if((isMovingUp && RobotMap.manipController.getRawButton(XboxMap.X)) || (isMovingDown && RobotMap.manipController.getRawButton(XboxMap.X))) 
+        {
+            speed = 0;
+        }
         //Set the motor to the speed as defined by the if's above
         elevMotor.set(speed);
-        encData = encoder.get();
+        //encData = encoder.get();
 
         /*distance = encoder.getDistance();
         period = encoder.getPeriod();

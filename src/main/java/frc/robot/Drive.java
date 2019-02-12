@@ -8,8 +8,8 @@ import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 
 public class Drive extends Component {
   
-  //A multipier for speed
-  final double MULTIPLIER = .6;
+  //A multipier for speed - CHANGE BACK LOWER
+  final double MULTIPLIER = 1;
 
   //Motors
   private WPI_VictorSPX leftFront;
@@ -30,13 +30,15 @@ public class Drive extends Component {
   public Drive() {
 
     //Initialize motors using the ports that are in RobotMap
-    leftFront = new WPI_VictorSPX(RobotMap.LEFT_FRONT_MOTOR);
-    rightFront = new WPI_VictorSPX(RobotMap.RIGHT_FRONT_MOTOR);
-    leftBack = new WPI_VictorSPX(RobotMap.LEFT_BACK_MOTOR);
-    rightBack = new WPI_VictorSPX(RobotMap.RIGHT_BACK_MOTOR);
+    leftFront = new WPI_VictorSPX(RobotMap.LEFT_FRONT_DRIVE);
+    rightFront = new WPI_VictorSPX(RobotMap.RIGHT_FRONT_DRIVE);
+    leftBack = new WPI_VictorSPX(RobotMap.LEFT_BACK_DRIVE);
+    rightBack = new WPI_VictorSPX(RobotMap.RIGHT_BACK_DRIVE);
 
-    //invert one motor :D (but why?)
+    //invert one motor :D - usually at least one is mounted/wired weirdly? idk
     leftFront.setInverted(true);
+    rightFront.setInverted(true);
+    rightBack.setInverted(true);
     
     //Initialize speed controllers
     leftDrive = new SpeedControllerGroup(leftFront, leftBack);

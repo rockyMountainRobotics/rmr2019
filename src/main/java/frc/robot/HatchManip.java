@@ -1,6 +1,6 @@
 package frc.robot;
 
-import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
 
 
 public class HatchManip extends Component
@@ -10,17 +10,34 @@ public class HatchManip extends Component
     boolean beakOpen;
 
     //Constructing Solenoids
-    Solenoid trackSolenoid;
-    Solenoid beakSolenoid;
+    //TODO: update to double solenoids
+    DoubleSolenoid trackSolenoid;
+    DoubleSolenoid beakSolenoid;
+
+    //Solenoid Vaues so I don't have to use the whole long name every time :D
+    DoubleSolenoid.Value reverse = DoubleSolenoid.Value.kReverse;
+    DoubleSolenoid.Value forward = DoubleSolenoid.Value.kForward;
+    DoubleSolenoid.Value off = DoubleSolenoid.Value.kOff;
     
+
+
+    //"past" and "current" values -> checks whether button is being pressed, but ensures the setting will only occur once
+    boolean pastA;
+    boolean currentA;
+    boolean pastX;
+    boolean currentX;
+
+
 
     //Constructor
     public HatchManip()
     {
         beakExtended = false;
         beakOpen = false;
-        trackSolenoid = new Solenoid(RobotMap.TRACK_SOLENOID);
-        beakSolenoid = new Solenoid(RobotMap.BEAK_SOLENOID);
+        trackSolenoid = new DoubleSolenoid(RobotMap.TRACK_SOLENOID_OUT, RobotMap.TRACK_SOLENOID_IN);
+        trackSolenoid.set(reverse);
+        beakSolenoid = new DoubleSolenoid(RobotMap.BEAK_SOLENOID_OUT, RobotMap.BEAK_SOLENOID_IN);
+        beakSolenoid.set(forward);
     }
 
 
@@ -29,28 +46,48 @@ public class HatchManip extends Component
         //Only does stuff when in "H"atch mode
         if(SwitchMode.mode == 'H')
         {
-            /*
-            set(boolean) - 
-            true turns solenoid on and pushes beak foward, false retracts
-            true turns solenoid on and opens beak, false closes
-            */
-            
-            //Not sure if thats how solenoids work.
             
             //Changing solenoid states
             //If A button pressed change trackSolenoid
-            if(RobotMap.manipController.getRawButton(XboxMap.A)==true)
+            currentA = RobotMap.manipController.getRawButton(XboxMap.A)==true;
+            if(currentA && !pastA)
             {
-                beakExtended = !beakExtended; //Keeps track of whether the beak is extended or not.
-                trackSolenoid.set(beakExtended); //Extends/retracts beak based on beakExtended.
+                //If beak isn't extended, extend it.
+                if(trackSolenoid.get() == forward)
+                {
+                    trackSolenoid.set(reverse);
+                }
+                //Else retract it.
+                else
+                {
+                    trackSolenoid.set(forward);
+                }
             }
 
+            pastA = currentA;
+
             //If X button pressed change the state of beakSolenoid
-            if(RobotMap.manipController.getRawButton(XboxMap.A)==true)
+            currentX = RobotMap.manipController.getRawButton(XboxMap.X)==true;
+            if(currentX && !pastX)
             {
-                beakOpen = !beakOpen; //Keeps track of whether beak is open or closed.
-                beakSolenoid.set(beakOpen); //Opens/closes beak based on beakOpen.
+                //If beak isn't open, open it.
+                if(beakSolenoid.get() == forward)
+                {
+                    beakSolenoid.set(reverse);
+                }
+                //Else retract it.
+                else
+                {
+                    beakSolenoid.set(forward);
+                }
             }    
+            pastX = currentX;
+        }
+
+        //TODO: this will drop the hatch when we switch modes. make sure thats what we want. (Prevent accidents by not resetting beak)
+        else
+        {
+            reset();
         }
     }
 
@@ -72,8 +109,8 @@ public class HatchManip extends Component
     public void reset()
     {
         //reset the solenoids to off and the corresponding variables
-        trackSolenoid.set(false);
-        beakSolenoid.set(false);
+        trackSolenoid.set(reverse);
+        beakSolenoid.set(reverse);
         beakOpen = false;
         beakExtended = false;
     }

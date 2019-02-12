@@ -2,56 +2,43 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Solenoid;
 
-//Activates the solenoids at the front of the robot to angle it to get up onto the step.
-
-public class Wheelie implements Component
+public class Wheelie extends Component
 {
-    //Keeps track of whether we are up(wheelie) or down(normal). up = true, down = false.
-    boolean upOrDown;
+	Solenoid lifter = new Solenoid(RobotMap.LIFTER_SOLENOID);
+	boolean current = true;
+	boolean past = false;
+	
+	
+	public void update()
+	{
+		current = RobotMap.driveController.getRawButton(XboxMap.A);
+		
+		if(current == true && past == false){
+			lifter.set(!lifter.get());
+		}
+		past = current;
+	}
 
-    //Solenoid
-    Solenoid pushRobotUp;
 
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    //Constructor; initializes all variables.
-    public Wheelie()
-    {
-        //fix RobotMap bit
-        pushRobotUp = new Solenoid(RobotMap.INSERT_SOLENOID_HERE);
-        upOrDown = false;
+	@Override
+	public void autoUpdate() 
+	{
+		
+	}
+
+
+	@Override
+	public void disable() 
+	{
+		reset();
     }
-
-    /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void update()
-    {
-        if(RobotMap.driveController.getRawButton(XboxMap.A)==true)
-        {
-            //Change boolean to keep track of solenoid state.
-            upOrDown = !upOrDown;
-            //Push out / bring in solenoid
-            pushRobotUp.set(upOrDown);
-        }
-    }
-
-    ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void autoUpdate()
-    {
-
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-    public void disable()
-    {
-        //puts robot back on ground when disabled.
-        reset();
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+    
     public void reset()
     {
         //resets everything to default (not extended and upOrDown false)
-        upOrDown = false;
-        pushRobotUp.set(false);
+        //TODO: Check which direction is which :)
+        lifter.set(false);
     }
-
+	
+	
 }
