@@ -30,6 +30,7 @@ public class RobotMap
 	public final static int LIMIT_TOP = 3;
 	public final static int LIMIT_BOTTOM = 2;
 	public final static int LIMIT_BACK = 8;
+	public final static int LIMIT_TOP_ARM = 1;
     
     //Controllers
     public static XboxController driveController = new XboxController(0);

@@ -24,6 +24,7 @@ public class BallManip extends Component
     
     //Limit Switch - checks if there's a ball in the grabber
     public DigitalInput limitSwitchBack;
+    public DigitalInput limitSwitchTopArmStop;
     
     //Encoder (has Quadrature support)
     //Encoder encArmHeight;
@@ -39,6 +40,7 @@ public class BallManip extends Component
         
         //Initializes Limit Switch
         limitSwitchBack = new DigitalInput(RobotMap.LIMIT_BACK);
+        limitSwitchTopArmStop = new DigitalInput(RobotMap.LIMIT_TOP_ARM);
 
 
         //INVERTS the RIGHT side motor so that both sides spin inwards. Might need to change this if
@@ -80,7 +82,16 @@ public class BallManip extends Component
             //When they push the joystick further than the deadzone, set the arm to the value of the joystick (in testing may want to multiply by .5 or something to allow more precise controls)
             if(Math.abs(RobotMap.manipController.getRawAxis(XboxMap.RIGHT_JOY_VERT)) > DEADZONE_2)
             {
-                armMover.set(-.5*RobotMap.manipController.getRawAxis(XboxMap.RIGHT_JOY_VERT));
+                //Checks if you are 1) hitting the limit switch at the top of the robot and 2)tring to go further in that
+                //Direction. If you are, it stops you.
+                if(limitSwitchTopArmStop.get() && RobotMap.manipController.getRawAxis(XboxMap.RIGHT_JOY_VERT) < 0)
+                {
+                    armMover.set(-.5*RobotMap.manipController.getRawAxis(XboxMap.RIGHT_JOY_VERT));
+                }
+                else
+                {
+                    armMover.set(0);
+                }
             }
             else
             {
