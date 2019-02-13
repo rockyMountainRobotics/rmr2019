@@ -45,7 +45,7 @@ public class Elevator extends Component
     {
         limitSwitchTop = new DigitalInput(RobotMap.LIMIT_TOP);
         limitSwitchBottom = new DigitalInput(RobotMap.LIMIT_BOTTOM);                
-	    //encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
+        //encoder = new Encoder(0, 1, false, Encoder.EncodingType.k4X);
     }
 
 

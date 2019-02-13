@@ -96,6 +96,7 @@ public class BallManip extends Component
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void autoUpdate()
     {
+        update();
         //Will probably need to call update(), for the auto lineup + shoot (if we are having the auto also shoot the ball)
 
     }
