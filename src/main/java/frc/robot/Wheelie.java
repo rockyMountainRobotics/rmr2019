@@ -23,7 +23,7 @@ public class Wheelie extends Component
 	@Override
 	public void autoUpdate() 
 	{
-		
+		update();
 	}
 
 

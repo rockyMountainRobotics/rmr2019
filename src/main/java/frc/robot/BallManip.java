@@ -84,13 +84,13 @@ public class BallManip extends Component
             {
                 //Checks if you are 1) hitting the limit switch at the top of the robot and 2)tring to go further in that
                 //Direction. If you are, it stops you.
-                if(limitSwitchTopArmStop.get() && RobotMap.manipController.getRawAxis(XboxMap.RIGHT_JOY_VERT) < 0)
+                if(limitSwitchTopArmStop.get() && RobotMap.manipController.getRawAxis(XboxMap.RIGHT_JOY_VERT) > 0)
                 {
-                    armMover.set(-.5*RobotMap.manipController.getRawAxis(XboxMap.RIGHT_JOY_VERT));
+                    armMover.set(0);
                 }
                 else
                 {
-                    armMover.set(0);
+                    armMover.set(.5*RobotMap.manipController.getRawAxis(XboxMap.RIGHT_JOY_VERT));
                 }
             }
             else

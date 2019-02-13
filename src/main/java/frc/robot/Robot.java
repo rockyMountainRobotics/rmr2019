@@ -69,6 +69,14 @@ public class Robot extends TimedRobot {
       parts[i].update();
     }
   }
-}
 
-//TODO: during sandstorm the robot is automatically in autonomous mode; we will need to be able to drive still during then
+  @Override
+  public void autonomousPeriodic()
+  {
+    for(int i = 0; i < numParts; i++)
+    {
+      parts[i].autoUpdate();
+    }
+  }
+
+}

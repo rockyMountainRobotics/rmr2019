@@ -60,6 +60,7 @@ public class Drive extends Component {
     @Override
     public void autoUpdate() {
         // probably need to call update in here
+        update();
     }
 
     @Override

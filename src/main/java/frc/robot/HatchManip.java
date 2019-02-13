@@ -94,8 +94,7 @@ public class HatchManip extends Component
 
     public void autoUpdate()
     {
-
-
+        update();
     }
 
 

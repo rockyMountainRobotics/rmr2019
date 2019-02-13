@@ -6,7 +6,7 @@ public class SwitchMode extends Component
 {
     public static char mode;
 
-    boolean pastY;
+    boolean pastY = false;
     boolean currentY;
     
     //TODO: PUT RESET IN TELEOP INIT (stays in C if not turned off)
@@ -42,6 +42,7 @@ public class SwitchMode extends Component
     @Override
     public void autoUpdate()
     {
+      update();
     }
     
     @Override

@@ -103,6 +103,7 @@ public class Elevator extends Component
     public void autoUpdate()
     {
         //TODO: Probably needs update() here
+        update();
     }
 
     

@@ -23,7 +23,7 @@ public class Shifter extends Component
 	@Override
 	public void autoUpdate() 
 	{
-		
+		update();
 	}
 
 
