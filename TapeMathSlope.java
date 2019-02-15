@@ -7,24 +7,19 @@ public class TapeMathSlope extends Component
 	{
 
 		int x1 = 9999;
-
 		int y1 = 9999;
-
 		int pos1 = 0;
 
 
 		int x2 = -9999;
-
 		int y2 = 9999;
-
 		int pos2 = 0;
 
 
 		int x3 = -9999;
-
 		int y3 = 0;
-
 		int pos3 = 0;
+		
 		int x4 = 0;
 		int y4 = 0;
 
@@ -45,68 +40,37 @@ public class TapeMathSlope extends Component
 		//Find the first point
 
 		for(int i = 0; i<7; i+=2){
-			if((array[i+1] < y1) || (array[i+1] == y1 && array[i] < x1)){
-
-				x1 = array[i];
-
-				y1 = array[i+1];
-
+			if((positions[i+1] < y1) || (positions[i+1] == y1 && positions[i] < x1)){
+				x1 = positions[i];
+				y1 = positions[i+1];
 				pos1 = i;
-
 			}
-
 		}
-
-
 
 		//Find the second point
-
 		for(int i = 0; i<7;i+=2){
-
-			if(i!=pos1 && (array[i] > x2 || (array[i] == x2 && array[i+1] < y2))){
-
-				x2 = array[i];
-
-				y2 = array[i+1];
-
+			if(i!=pos1 && (positions[i] > x2 || (positions[i] == x2 && positions[i+1] < y2))){
+				x2 = positions[i];
+				y2 = positions[i+1];
 				pos2 = i;
-
 			}
-
 		}
-
-
 
 		//Find the third point
-
 		for(int i = 0; i < 7; i+=2){
-
-			if((i!=pos1 && i!=pos2) && array[i] > x3){
-
-				x3 = array[i];
-
-				y3 = array[i+1];
-
+			if((i!=pos1 && i!=pos2) && positions[i] > x3){
+				x3 = positions[i];
+				y3 = positions[i+1];
 				pos3 = i;
-
 			}
-
 		}
 
-
-
 		//Find the fourth point
-
 		for(int i = 0; i < 7; i+=2){
-
 			if(i!=pos1 && i!=pos2 && i!=pos3){
-
-				x4=array[i];
-
-				y4=array[i+1];
-
+				x4=positions[i];
+				y4=positions[i+1];
 			}
-
 		}
 
 		//Calculating inital avgeraged points
