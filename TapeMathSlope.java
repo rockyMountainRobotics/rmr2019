@@ -3,6 +3,20 @@
 
 public class TapeMathSlope extends Component
 {
+	//camera init
+  	SerialPort cam;
+
+  	//Creates an int to hold the number of times the x or y values exceed their limit for whatever reason.
+  	int exceedsCap = 0;
+  	int totalNums = 0;
+  	int largestX = 0;
+  	int largestY = 0;
+  	//UsbCamera jevois = CameraServer.getInstance().startAutomaticCapture();
+
+  	@Override
+  	public void robotInit() {
+    		cam = new SerialPort(115200, SerialPort.Port.kUSB);
+  	}
 	public void update()
 	{
 
@@ -35,10 +49,51 @@ public class TapeMathSlope extends Component
 		//Placeholder turn values
 		double turnValue;
 		double turnConstant=1;
+		
+		/*System.out.println("pinging Jevois");
+  		String cmd = "ping";
+    		int bytes = cam.writeString(cmd + "\n");
+    		System.out.println("wrote  "+ bytes + "/" + cmd.length() + "bytes");*/
+    		//try to read the string
+      		try{
+        		if (cam.getBytesReceived() > 0)
+        		{
+          		//This just reads the data from the camera and puts it into a string.
+          		String cameraInput = cam.readString();
+		
+          		//Outputs the string we just made.
+          		//System.out.println(cameraInput);
+		
+          		//Splits the camera data because sometimes it gives us two inputs shoved together
+          		String [] output = cameraInput.split(" ");
+		
+          		//Gets rid of invisible characters in the string
+          		output[output.length - 1] = output[output.length - 1].replaceAll("[^0-9-]", "");
+		          
+          		//Creates an array to hold the 4 x and 4 y values
+          		int [] points = new int[8]; 
+          		int j = 0; 
+          		for(int i = output.length-8; i < output.length; i++){
+              			//puts all STRING points into an INT array so we can use them properly. 
+              			points[j] = Integer.valueOf(output[i]);   
+              			j++;  
+          		}
+
+          		//Prints out all the int values in the array.
+          		for(int i = 0; i < points.length; i++){
+            			System.out.print(points[i] + ", ");
+				totalNums++;
+			}
+		}
+		catch (Exception e) {
+       			//if it fails, print an error message
+        		System.out.println("Error: " + e);
+      		}
+		
+		System.out.println("Total Values:" + totalNums);
 
 
 		//Find the first point
-
 		for(int i = 0; i<7; i+=2){
 			if((positions[i+1] < y1) || (positions[i+1] == y1 && positions[i] < x1)){
 				x1 = positions[i];
