@@ -127,6 +127,8 @@ public class TapeMathSlope extends Component
 				y4=positions[i+1];
 			}
 		}
+		
+		//output the array
 
 		//Calculating inital avgeraged points
 		if(y4<y2) //If true y4 and y1 are top points if false y1 and y2 are top points
@@ -147,8 +149,9 @@ public class TapeMathSlope extends Component
 
 
 		//Loop to turn until correct
-		while(xtopAvg-xBottomAvg!=0)
+		if(xtopAvg-xBottomAvg!=0)
 		{
+			System.out.println("Not Straight");
 			//Get slope
 			slope=(yTopAvg-yBottomAvg)/(xTopAvg-xBottomAvg);
 
@@ -166,7 +169,7 @@ public class TapeMathSlope extends Component
 			}
 
 
-			//Call functions to turn robot and functions to get new camera data here
+			//Call functions to turn robot here
 
 
 			//Updating the avg points
