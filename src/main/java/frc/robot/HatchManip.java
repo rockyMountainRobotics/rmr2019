@@ -1,6 +1,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Solenoid;
 
 
 public class HatchManip extends Component
@@ -10,8 +11,8 @@ public class HatchManip extends Component
     boolean beakOpen;
 
     //Constructing Solenoids
-    //TODO: update to double solenoids
-    DoubleSolenoid trackSolenoid;
+    
+    Solenoid trackSolenoid;
     DoubleSolenoid beakSolenoid;
 
     //Solenoid Vaues so I don't have to use the whole long name every time :D
@@ -32,12 +33,10 @@ public class HatchManip extends Component
     //Constructor
     public HatchManip()
     {
-        beakExtended = false;
-        beakOpen = false;
-        trackSolenoid = new DoubleSolenoid(RobotMap.TRACK_SOLENOID_OUT, RobotMap.TRACK_SOLENOID_IN);
-        trackSolenoid.set(reverse);
+        trackSolenoid = new Solenoid(RobotMap.TRACK_SOLENOID);
         beakSolenoid = new DoubleSolenoid(RobotMap.BEAK_SOLENOID_OUT, RobotMap.BEAK_SOLENOID_IN);
         beakSolenoid.set(forward);
+        trackSolenoid.set(false);
     }
 
 
@@ -50,19 +49,11 @@ public class HatchManip extends Component
             //Changing solenoid states
             //If A button pressed change trackSolenoid
             currentA = RobotMap.manipController.getRawButton(XboxMap.A)==true;
-            if(currentA && !pastA)
-            {
-                //If beak isn't extended, extend it.
-                if(trackSolenoid.get() == forward)
-                {
-                    trackSolenoid.set(reverse);
-                }
-                //Else retract it.
-                else
-                {
-                    trackSolenoid.set(forward);
-                }
-            }
+            
+		
+		    if(currentA == true && pastA == false){
+			    trackSolenoid.set(!trackSolenoid.get());
+		    }
 
             pastA = currentA;
 
@@ -84,7 +75,6 @@ public class HatchManip extends Component
             pastX = currentX;
         }
 
-        //TODO: this will drop the hatch when we switch modes. make sure thats what we want. (Prevent accidents by not resetting beak)
         else
         {
             reset();
@@ -108,9 +98,9 @@ public class HatchManip extends Component
     public void reset()
     {
         //reset the solenoids to off and the corresponding variables
-        trackSolenoid.set(reverse);
+        //TODO: find which value is which
+        trackSolenoid.set(false);
         beakSolenoid.set(reverse);
-        beakOpen = false;
-        beakExtended = false;
+
     }
 }

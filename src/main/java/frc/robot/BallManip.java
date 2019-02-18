@@ -77,6 +77,7 @@ public class BallManip extends Component
         //Stuff only works when in ball mode
         if(SwitchMode.mode == 'C')
         {
+            System.out.println("arm stop: " + limitSwitchTopArmStop.get());
             ballPushPull();
             
             //When they push the joystick further than the deadzone, set the arm to the value of the joystick (in testing may want to multiply by .5 or something to allow more precise controls)
@@ -122,9 +123,7 @@ public class BallManip extends Component
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void ballPushPull()
-    {
-        //TODO - does this need to override the next two ifs
-        
+    {        
         //When left trigger is pressed and right trigger isn't being pressed
         if(limitSwitchBack.get() && (RobotMap.manipController.getTriggerAxis(Hand.kLeft) > DEADZONE_2 && RobotMap.manipController.getTriggerAxis(Hand.kRight) < DEADZONE_2))
          {
@@ -151,8 +150,13 @@ public class BallManip extends Component
     //Resets the arm to its default position so that the beak can extend and not hit the arm.
     public void reset()
     {
-        //TODO: Need to fix for encoder, so that the motors don't just grind the arm into the robot.
+        //TODO: double check that the motors don't just grind the arm into the robot.
         //armMover.set(-.5);
+        /*if(!limitSwitchTopArmStop.get())
+        {
+            System.out.println("Resetting");
+            armMover.set(.5);
+        }*/
         
     }
 

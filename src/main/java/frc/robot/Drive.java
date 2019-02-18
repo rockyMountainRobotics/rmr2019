@@ -59,13 +59,16 @@ public class Drive extends Component {
    
     @Override
     public void autoUpdate() {
-        // probably need to call update in here
+        
         update();
     }
 
     @Override
     public void disable() {
-
+      leftBack.set(0);
+      leftFront.set(0);
+      rightBack.set(0);
+      rightFront.set(0);
     }
 
 }

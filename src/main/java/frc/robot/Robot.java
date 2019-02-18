@@ -9,7 +9,6 @@ package frc.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 
@@ -27,13 +26,12 @@ public class Robot extends TimedRobot {
   //The camera
   UsbCamera driverCam;
   CompressorSwitch cs;
-
-  //TODO: ADD A SHIFTER!!!
+  CameraServer cameraServer;
 
   @Override
   public void robotInit() {
     //Create the camera
-    //CameraServer cameraServer = CameraServer.getInstance();
+    //cameraServer = CameraServer.getInstance();
     //driverCam = cameraServer.startAutomaticCapture();
     System.out.println("Robot Init");
 

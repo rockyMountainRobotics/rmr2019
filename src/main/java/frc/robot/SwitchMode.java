@@ -1,10 +1,13 @@
 package frc.robot;
 //TODO: change "C" to "B" to make more sense
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 //Changes modes between Hatches and Balls (so buttons will do different things); makes sure the beak and the ball arm don't hit each other
 public class SwitchMode extends Component
 {
     public static char mode;
+    String modeStr = "H";
 
     boolean pastY = false;
     boolean currentY;
@@ -36,6 +39,10 @@ public class SwitchMode extends Component
         }
       }
       pastY = currentY;
+
+      modeStr.replace(modeStr.charAt(0), mode);
+      
+      SmartDashboard.putBoolean("SwitchMode", mode == 'H');
           
     }
     

@@ -20,8 +20,7 @@ public class RobotMap
 	//Solenoids
 	public final static int BEAK_SOLENOID_IN = 3;
 	public final static int BEAK_SOLENOID_OUT = 2;
-	public final static int TRACK_SOLENOID_IN = 1;
-	public final static int TRACK_SOLENOID_OUT = 0;
+	public final static int TRACK_SOLENOID = 0;
 	public final static int LIFTER_SOLENOID = 6;
 	public final static int SHIFTER_LOW = 4;
 	public final static int SHIFTER_HIGH = 5;
