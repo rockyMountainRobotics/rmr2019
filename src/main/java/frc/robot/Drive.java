@@ -52,9 +52,29 @@ public class Drive extends Component {
 
   @Override
   public void update() {
-    //Drive!!
+    
+    //Drive Based on Vision Code (Will only trigger if RB is held)
+    if (RobotMap.driveController.getRawButton(XboxMap.RB))//If RB Button Pressed
+    {
+      if (dir1 == "RIGHT") //If told to go left by vision code...
+      {
+        m_myRobot.arcadeDrive(MULTIPLIER * 3, 0);// Arbitrary Number, fix later
+      } 
+      else if(dir1 == "LEFT")//If told to go left by vision code...
+      {
+        m_myRobot.arcadeDrive(0, MULTIPLIER * 3);// Arbitrary Number, fix later
+      } 
+      else if (dir1 == "STRAIGHT")//If told to go Straight by vision code...
+      {
+        m_myRobot.arcadeDrive(MULTIPLIER * 3, MULTIPLITER * 3);// 3is an arbitrary Number, fix later
+      } 
+    }
+    // End of Vision Code Addon
+    
+    
+    //Drive!! (Normally)
     m_myRobot.arcadeDrive(MULTIPLIER *(-RobotMap.driveController.getY(Hand.kLeft)), MULTIPLIER*(RobotMap.driveController.getX(Hand.kLeft)));
-  
+    
   }
    
     @Override
