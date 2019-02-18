@@ -3,6 +3,8 @@
 
 public class TapeMathSlope extends Component
 {
+
+	public String dir1 = "";
 	//camera init
   	SerialPort cam;
 
@@ -147,31 +149,55 @@ public class TapeMathSlope extends Component
 			yBottomAvg=(y3+y4)/2;
 		}
 
-
-		//Loop to turn until correct
-		if(xtopAvg-xBottomAvg!=0)
+		//Get inverse slope -- this is more usefull because straight has a slope of 0, not undifined
+		if(yTopAvg - yBottomAvg != 0){
+			slope=(xTopAvg-xBottomAvg)/(yTopAvg-yBottomAvg);
+		} else {
+			//if it is 90 degrees off, direction does not matter that much
+			//because whoever is driving it has done a bad
+			dir = "LEFT";
+		}
+		if(slope > 4 || slope < -4) //if the slope is not straight...
 		{
 			System.out.println("Not Straight");
-			//Get slope
-			slope=(yTopAvg-yBottomAvg)/(xTopAvg-xBottomAvg);
-
-			//Test Output
-			System.out.print(slope);
-
-			//The robot will turn an amount inversly proportional to the slope.
-			if(slope!=0)
+			
+			//tell the robot to move towards slope 0
+			if(slope < 0){
+				dir1 = "LEFT"
+			} else if(slope > 0){
+				dir1 = "RIGHT"
+			}
+			
+			//I hope this code works vvv
+			//Updating the avg points
+			if(y4<y2) //If true y4 and y1 are top points if false y1 and y2 are top points
 			{
-				turnValue=turnConstant/slope;
+				xTopAvg=(x1+x4)/2;
+				yTopAvg=(y1+y4)/2;
+				xBottomAvg=(x3+x2)/2;
+				yBottomAvg=(y3+y2)/2;
+				turnConstant=turnConstant*-1;
 			}
 			else
 			{
-				//Plan if rectangle is perfecly horizontal
+				xTopAvg=(x1+x2)/2;
+				yTopAvg=(y1+y2)/2;
+				xBottomAvg=(x3+x4)/2;
+				yBottomAvg=(y3+y4)/2;
 			}
-
-
-			//Call functions to turn robot here
-
-
+		} else {
+			//make sure that the robot is centered on the line
+			if(xTopAvg > 10){
+				dir1 = "LEFT";
+			} else if (xTopAvg < -10){
+				dir1 = "RIGHT";
+			} else {
+				dir1 = "STRAIGHT";
+			}
+			
+			
+			//this is the code from above
+			//I hope this code works vvv
 			//Updating the avg points
 			if(y4<y2) //If true y4 and y1 are top points if false y1 and y2 are top points
 			{
@@ -198,7 +224,7 @@ public class TapeMathSlope extends Component
 	
 	public void disable()
 	{
-		//disable someone else do it
+		System.out.println( "If you are reading this, that is because the robot's sensors have detected that the world will end in 30 minutes. The only thing that you can do to prevent this is to find the sword of Martin the Warrior and use it to kill Voldemort , who you can find in Camelot.");
 	}
 }		
 
