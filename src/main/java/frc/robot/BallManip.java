@@ -29,6 +29,8 @@ public class BallManip extends Component
     //Encoder (has Quadrature support)
     //Encoder encArmHeight;
 
+    private long resetTime = 0; 
+
 
     //Constructor
     public BallManip()
@@ -74,10 +76,10 @@ public class BallManip extends Component
     /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
     public void update()
     {
+        System.out.println("Arm Stop Limit Switch" + limitSwitchTopArmStop.get());
         //Stuff only works when in ball mode
         if(SwitchMode.mode == 'C')
         {
-            System.out.println("arm stop: " + limitSwitchTopArmStop.get());
             ballPushPull();
             
             //When they push the joystick further than the deadzone, set the arm to the value of the joystick (in testing may want to multiply by .5 or something to allow more precise controls)
@@ -85,13 +87,13 @@ public class BallManip extends Component
             {
                 //Checks if you are 1) hitting the limit switch at the top of the robot and 2)tring to go further in that
                 //Direction. If you are, it stops you.
-                if(limitSwitchTopArmStop.get() && RobotMap.manipController.getRawAxis(XboxMap.RIGHT_JOY_VERT) > 0)
+                if(!limitSwitchTopArmStop.get() && -RobotMap.manipController.getRawAxis(XboxMap.RIGHT_JOY_VERT) > 0)
                 {
                     armMover.set(0);
                 }
                 else
                 {
-                    armMover.set(.5*RobotMap.manipController.getRawAxis(XboxMap.RIGHT_JOY_VERT));
+                    armMover.set(-.5*RobotMap.manipController.getRawAxis(XboxMap.RIGHT_JOY_VERT));
                 }
             }
             else
@@ -102,6 +104,7 @@ public class BallManip extends Component
         else
         {
             reset();
+            resetTime = System.currentTimeMillis();
         }
     }
 
@@ -152,10 +155,13 @@ public class BallManip extends Component
     {
         //TODO: double check that the motors don't just grind the arm into the robot.
         //armMover.set(-.5);
-        /*if(!limitSwitchTopArmStop.get())
+        /*if(limitSwitchTopArmStop.get())
         {
             System.out.println("Resetting");
             armMover.set(.5);
+        }
+        else{
+            armMover.set(0);
         }*/
         
     }

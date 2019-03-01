@@ -9,6 +9,7 @@ package frc.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
+import edu.wpi.first.wpilibj.SerialPort;
 import edu.wpi.first.wpilibj.TimedRobot;
 
 
@@ -24,34 +25,35 @@ public class Robot extends TimedRobot {
   int numParts = 0;
 
   //The camera
-  UsbCamera driverCam;
+  UsbCamera driverCamUp;
+  UsbCamera driverCamDown;
   CompressorSwitch cs;
   CameraServer cameraServer;
 
   @Override
   public void robotInit() {
     //Create the camera
-    //cameraServer = CameraServer.getInstance();
-    //driverCam = cameraServer.startAutomaticCapture();
+    cameraServer = CameraServer.getInstance();
+    driverCamUp = cameraServer.startAutomaticCapture(0);
+    driverCamDown = cameraServer.startAutomaticCapture(1);
     System.out.println("Robot Init");
 
-
     //Initialize the components
-    parts[0] = new Drive();
+    parts[numParts] = new Drive();
     numParts++;
-    parts[1] = new CompressorSwitch();
+    parts[numParts] = new CompressorSwitch();
     numParts++;
-    parts[2] = new SwitchMode();
+    parts[numParts] = new SwitchMode();
     numParts++;
-    parts[3] = new BallManip();
+    parts[numParts] = new BallManip();
     numParts++;
-    parts[4] = new HatchManip();
+    parts[numParts] = new HatchManip();
     numParts++;
-    parts[5] = new Elevator();
+    parts[numParts] = new Elevator();
     numParts++;
-    parts[6] = new Shifter();
+    parts[numParts] = new Shifter();
     numParts++;
-    parts[7] = new Wheelie();
+    parts[numParts] = new Wheelie();
     numParts++;
     
     //camera = CameraServer.getInstance().startAutomaticCapture();

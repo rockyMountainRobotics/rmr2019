@@ -24,7 +24,7 @@ public class Elevator extends Component
 
 
     //Constants declaring top and bottom values for encoder *NOT TESTED(change values or ded)
-    private int TOP_UP = 45000;
+    private int TOP_UP = 41000;
     private int TOP_DOWN = 0;
     private int BOTTOM_UP = 0;
     private int BOTTOM_DOWN = -48000;
@@ -51,6 +51,8 @@ public class Elevator extends Component
     //Updates Robot Position every frame
     public void update()
     {
+
+        System.out.println("Velocity: " + elevMotor.getSelectedSensorVelocity());
         //get the encoder position
         enc = elevMotor.getSelectedSensorPosition();
 
@@ -82,7 +84,7 @@ public class Elevator extends Component
 
 
         //If limit switch is hit, set position
-        if(!limitSwitchBottom.get() || !limitSwitchTop.get())
+        if(!limitSwitchBottom.get() /*|| !limitSwitchTop.get()*/)
         {
             //reset the encoder
             elevMotor.setSelectedSensorPosition(0, 0, 30);
@@ -109,13 +111,24 @@ public class Elevator extends Component
         }
         
 
+        if(Math.abs(elevMotor.getSelectedSensorVelocity()) >= 2500)
+        {
+            System.out.println("Too Fast :d");
+            speed = .1;
+        }
+        else
+        {
+            speed = 0;
+        }
+
+
         //GO TO EACH POSITION
         if(gotoPos.equals("TOP"))
         {
-            if(enc < (TOP_UP-1000))
+            if(/*enc < (TOP_UP-1000)*/ limitSwitchTop.get())
             {
                 System.out.println("Top, moving up");
-                elevMotor.set(.55);
+                elevMotor.set(.70 - speed);
             }
             else
             {
@@ -131,12 +144,12 @@ public class Elevator extends Component
             if(enc < MIDDLE_UP-1000)
             {
                 System.out.println("Middle, going up");
-                elevMotor.set(.55);
+                elevMotor.set(.70 - speed);
             }
             else if(enc > MIDDLE_UP+1000)
             {
                 System.out.println("Middle, going down");
-                elevMotor.set(-.35);
+                elevMotor.set(-.35 + speed);
             }
             else
             {
@@ -151,7 +164,7 @@ public class Elevator extends Component
             if(enc > (BOTTOM_UP + 1000))
             {
                 System.out.println("Bottom, moving down");
-                elevMotor.set(-.35);
+                elevMotor.set(-.35 + speed);
             }
             else
             {
